@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dp_10"
+    >
+    <ImageView
+        android:id="@+id/imageViewSongs"
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="@dimen/dp_100"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/textViewNameSong"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+    <TextView
+        android:id="@+id/textViewNameSong"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_10"
+        android:textSize="@dimen/sp_20"
+        app:layout_constraintBottom_toTopOf="@id/textViewNameArtist"
+        app:layout_constraintLeft_toRightOf="@+id/imageViewSongs"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/imageViewSongs"
+        />
+    <TextView
+        android:id="@+id/textViewNameArtist"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_18"
+        app:layout_constraintBottom_toBottomOf="@id/imageViewSongs"
+        app:layout_constraintLeft_toLeftOf="@id/textViewNameSong"
+        app:layout_constraintRight_toRightOf="@id/textViewNameSong"
+        app:layout_constraintTop_toBottomOf="@id/textViewNameSong"
+        />
+</android.support.constraint.ConstraintLayout>
