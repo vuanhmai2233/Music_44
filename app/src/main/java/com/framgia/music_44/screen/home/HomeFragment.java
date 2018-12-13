@@ -18,6 +18,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
             Bundle savedInstanceState) {
         initPresenter();
         return inflater.inflate(R.layout.fragment_screen_home, container, false);
+
     }
 
     void initPresenter() {
