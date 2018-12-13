@@ -1,6 +1,7 @@
 package com.framgia.music_44.screen.home;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,7 @@ import java.util.List;
 public class HomeFragment extends Fragment implements HomeContract.View {
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         initPresenter();
         return inflater.inflate(R.layout.fragment_screen_home, container, false);
