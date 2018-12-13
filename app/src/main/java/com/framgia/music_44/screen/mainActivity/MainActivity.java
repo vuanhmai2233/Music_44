@@ -13,20 +13,22 @@ public class MainActivity extends AppCompatActivity
         implements BottomNavigationView.OnNavigationItemSelectedListener {
     private ViewPager mViewPager;
     private BottomNavigationView mBottomNavigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         mViewPager = findViewById(R.id.viewPager);
         mBottomNavigationView = findViewById(R.id.bottomNavigationView);
         mBottomNavigationView.setOnNavigationItemSelectedListener(this);
         setupViewPager(mViewPager);
     }
+
     private void setupViewPager(ViewPager viewPager) {
         ViewpagerAdapter viewpagerAdapter = new ViewpagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(viewpagerAdapter);
     }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
