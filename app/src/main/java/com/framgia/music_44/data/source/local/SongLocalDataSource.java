@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SongLocalDataSource implements SongDataSource.Local {
+
     private static SongLocalDataSource sInstance;
     private Context mContext;
 
@@ -52,13 +53,16 @@ public class SongLocalDataSource implements SongDataSource.Local {
                         cursor.getInt(image)));
                 String currenId = cursor.getString(id);
                 String currenDuration = cursor.getString(duration);
-                songsList.add(
-                        new Songs(currenNameSong, currenNameArtist, currenImage, currenDuration,
-                                currenUri, currenId));
+                songsList.add(new Songs.SongsBuilder().id(currenId)
+                        .duration(currenDuration)
+                        .nameArtist(currenNameArtist)
+                        .nameSong(currenNameSong)
+                        .uri(currenUri)
+                        .image(currenImage)
+                        .build());
             } while (cursor.moveToNext());
             cursor.close();
         }
-
         songLocal.onSuccess(songsList);
     }
 }
