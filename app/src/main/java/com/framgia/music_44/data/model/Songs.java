@@ -4,7 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Songs implements Parcelable {
-
     private String mNameSong;
     private String mNameArtist;
     private String mImage;
@@ -41,7 +40,6 @@ public class Songs implements Parcelable {
             return new Songs[size];
         }
     };
-
     public String getNameSong() {
         return mNameSong;
     }

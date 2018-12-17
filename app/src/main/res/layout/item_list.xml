@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/dp_10"
+    android:padding="@dimen/dp_2"
     >
     <ImageView
         android:id="@+id/imageViewSongs"
@@ -18,8 +18,9 @@
         android:id="@+id/textViewNameSong"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp_10"
-        android:textSize="@dimen/sp_20"
+        android:layout_margin="@dimen/dp_5"
+        android:textColor="@color/color_dark"
+        android:textSize="@dimen/sp_16"
         app:layout_constraintBottom_toTopOf="@id/textViewNameArtist"
         app:layout_constraintLeft_toRightOf="@+id/imageViewSongs"
         app:layout_constraintRight_toRightOf="parent"
@@ -29,6 +30,7 @@
         android:id="@+id/textViewNameArtist"
         android:layout_width="0dp"
         android:layout_height="@dimen/dp_18"
+        android:textColor="@color/color_dark"
         app:layout_constraintBottom_toBottomOf="@id/imageViewSongs"
         app:layout_constraintLeft_toLeftOf="@id/textViewNameSong"
         app:layout_constraintRight_toRightOf="@id/textViewNameSong"
