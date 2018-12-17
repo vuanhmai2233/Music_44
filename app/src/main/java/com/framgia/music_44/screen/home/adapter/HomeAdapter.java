@@ -30,7 +30,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ItemViewHolder
 
     public void addSongs(List<Songs> songs) {
         mSongs.addAll(songs);
-        notifyItemRangeChanged(mSongs.size() - ONE, songs.size() - ONE);
+        notifyDataSetChanged();
     }
 
     @NonNull
