@@ -1,9 +1,8 @@
-package com.framgia.music_44.data.source.local;
+package com.framgia.music_44.data.source.remote;
 
 import com.framgia.music_44.data.model.Songs;
 import java.util.List;
 
-public interface OnResultDataListener {
-
+public interface OnResultDataListenerRemote {
     void onSuccess(List<Songs> data);
 }

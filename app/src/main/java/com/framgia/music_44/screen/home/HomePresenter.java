@@ -3,6 +3,7 @@ package com.framgia.music_44.screen.home;
 import com.framgia.music_44.data.model.Songs;
 import com.framgia.music_44.data.source.SongsRepository;
 import com.framgia.music_44.data.source.local.OnResultDataListener;
+import com.framgia.music_44.data.source.remote.OnResultDataListenerRemote;
 import java.util.List;
 
 public class HomePresenter implements HomeContract.Presenter {
@@ -17,6 +18,16 @@ public class HomePresenter implements HomeContract.Presenter {
     @Override
     public void getSongsLocal() {
         mSongsRepository.getData(new OnResultDataListener() {
+            @Override
+            public void onSuccess(List<Songs> data) {
+                mView.onGetSongsSuccess(data);
+            }
+        });
+    }
+
+    @Override
+    public void getSongRemote() {
+        mSongsRepository.getDataRemote(new OnResultDataListenerRemote() {
             @Override
             public void onSuccess(List<Songs> data) {
                 mView.onGetSongsSuccess(data);

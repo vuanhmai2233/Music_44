@@ -10,5 +10,7 @@ public interface HomeContract {
 
     interface Presenter {
         void getSongsLocal();
+
+        void getSongRemote();
     }
 }
