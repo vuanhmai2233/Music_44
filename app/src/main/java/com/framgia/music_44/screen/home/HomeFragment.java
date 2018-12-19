@@ -13,12 +13,15 @@ import com.framgia.music_44.data.source.SongsRepository;
 import com.framgia.music_44.data.source.local.SongLocalDataSource;
 import com.framgia.music_44.data.source.remote.SongRemoteDataSource;
 import com.framgia.music_44.screen.home.adapter.HomeAdapter;
+import com.framgia.music_44.screen.play_music.PlayMusicFragment;
+import com.framgia.music_44.util.Navigator;
 import com.framgia.music_44.util.OnItemClickListener;
-import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFragment extends Fragment implements HomeContract.View, OnItemClickListener {
     private HomeAdapter mHomeAdapter;
+    private List<Songs> mSongs;
+    private Navigator mNavigator;
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
@@ -38,6 +41,7 @@ public class HomeFragment extends Fragment implements HomeContract.View, OnItemC
         recyclerView.setHasFixedSize(true);
         mHomeAdapter = new HomeAdapter(getContext(), this);
         recyclerView.setAdapter(mHomeAdapter);
+        mNavigator = new Navigator();
     }
 
     private void initPresenter() {
@@ -46,17 +50,20 @@ public class HomeFragment extends Fragment implements HomeContract.View, OnItemC
         SongsRepository songsRepository =
                 SongsRepository.getsInstance(songLocalDataSource, songRemoteDataSource);
         HomeContract.Presenter presenter = new HomePresenter(songsRepository, this);
-        presenter.getSongsLocal();
+        presenter.getSongRemote();
     }
 
     @Override
     public void onGetSongsSuccess(List<Songs> songs) {
         if (songs != null) {
+            mSongs = songs;
             mHomeAdapter.addSongs(songs);
         }
     }
 
     @Override
     public void onItemClick(int position) {
+        mNavigator.addFragment(PlayMusicFragment.newInstance(position, mSongs),
+                getFragmentManager());
     }
 }
