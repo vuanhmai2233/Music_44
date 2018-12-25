@@ -6,4 +6,8 @@
     <string name="home">Home</string>
     <string name="genres">Genres</string>
     <string name="search">Search</string>
+    <string name="external_storage">External storage</string>
+    <string name="permission_necessary">Permission necessary</string>
+    <string name="permission_is_necessary">Permission is necessary</string>
+    <string name="get_accounts_denied">Get accounts denied</string>
 </resources>
