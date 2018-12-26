@@ -32,7 +32,7 @@ public class SongLocalDataSource implements SongDataSource.Local {
         getSongData(mContext, songLocal);
     }
 
-    public void getSongData(Context context, OnResultDataListener songLocal) {
+    private void getSongData(Context context, OnResultDataListener songLocal) {
         List<Songs> songsList = new ArrayList<>();
         ContentResolver musicResolver = context.getContentResolver();
         Uri URI = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;

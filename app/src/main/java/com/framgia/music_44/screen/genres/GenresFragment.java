@@ -12,6 +12,7 @@ import com.framgia.music_44.R;
 import com.framgia.music_44.data.model.Genre;
 import com.framgia.music_44.screen.genres.adapter.GenresAdapter;
 import com.framgia.music_44.screen.home.HomeFragment;
+import com.framgia.music_44.util.Constant;
 import com.framgia.music_44.util.Genres;
 import com.framgia.music_44.util.GenresId;
 import com.framgia.music_44.util.Navigator;
@@ -54,27 +55,27 @@ public class GenresFragment extends Fragment implements OnItemClickListener {
     public void onItemClick(int position) {
         switch (position) {
             case GenresId.ALL_MUSIC_INT:
-                mNavigator.addFragment(HomeFragment.newInstance(Genres.ALL_MUSIC),
+                mNavigator.addFragment(HomeFragment.newInstance(Constant.REMOTE, Genres.ALL_MUSIC),
                         getFragmentManager());
                 break;
             case GenresId.ALL_AUDIO_INT:
-                mNavigator.addFragment(HomeFragment.newInstance(Genres.ALL_AUDIO),
+                mNavigator.addFragment(HomeFragment.newInstance(Constant.REMOTE, Genres.ALL_AUDIO),
                         getFragmentManager());
                 break;
             case GenresId.ALTERNATIVE_ROCK_INT:
-                mNavigator.addFragment(HomeFragment.newInstance(Genres.ALTERNATIVE_ROCK),
+                mNavigator.addFragment(HomeFragment.newInstance(Constant.REMOTE, Genres.ALTERNATIVE_ROCK),
                         getFragmentManager());
                 break;
             case GenresId.AMBIENT_INT:
-                mNavigator.addFragment(HomeFragment.newInstance(Genres.AMBIENT),
+                mNavigator.addFragment(HomeFragment.newInstance(Constant.REMOTE, Genres.AMBIENT),
                         getFragmentManager());
                 break;
             case GenresId.CLASSICAL_INT:
-                mNavigator.addFragment(HomeFragment.newInstance(Genres.CLASSICAL),
+                mNavigator.addFragment(HomeFragment.newInstance(Constant.REMOTE, Genres.CLASSICAL),
                         getFragmentManager());
                 break;
             case GenresId.COUNTRY_INT:
-                mNavigator.addFragment(HomeFragment.newInstance(Genres.COUNTRY),
+                mNavigator.addFragment(HomeFragment.newInstance(Constant.REMOTE, Genres.COUNTRY),
                         getFragmentManager());
                 break;
         }

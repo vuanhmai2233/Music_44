@@ -25,27 +25,36 @@ import com.framgia.music_44.util.Constant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import static com.framgia.music_44.util.Options.LOOP_ALL;
 import static com.framgia.music_44.util.Options.LOOP_ONE;
 import static com.framgia.music_44.util.Options.NON_LOOP;
+import static com.framgia.music_44.util.Options.NON_SHUFFLE;
+import static com.framgia.music_44.util.Options.SHUFFLE;
 import static com.framgia.music_44.util.Options.STRING_LOOP_ALL;
 import static com.framgia.music_44.util.Options.STRING_LOOP_ONE;
 import static com.framgia.music_44.util.Options.STRING_NON_LOOP;
 
 public class PlayMusicFragment extends Fragment
-        implements View.OnClickListener, MediaPlayer.OnCompletionListener,SeekBar.OnSeekBarChangeListener {
+        implements View.OnClickListener, MediaPlayer.OnCompletionListener,
+        SeekBar.OnSeekBarChangeListener {
+
     private static final String ARGUMENT_SONGS = "ARGUMENT_SONGS";
     private static final String ARGUMENT_POSITION = "ARGUMENT_POSITION";
     private static final String FORMAT_TIME = "%02d:%02d";
+
     private List<Songs> mSongs;
     private int mPosition;
-    private TextView mTextViewNameSong, mTextViewTimeSongPosition,mTextViewTimeSongDuration;
+    private TextView mTextViewNameSong, mTextViewTimeSongPosition, mTextViewTimeSongDuration;
     private ImageView mImageViewSongs;
-    private ImageButton mImageButtonPlay, mImageButtonPause, mImageButtonLoopOne;
+    private ImageButton mImageButtonPlay, mImageButtonPause, mImageButtonLoopOne,
+            mImageButtonShuffle;
     private MediaPlayer mMediaPlayer;
     private int mState = NON_LOOP;
+    private int mStateShuffle = NON_SHUFFLE;
     private SeekBar mSeekBar;
     private ServicePlayMusic mServicePlayMusic;
 
@@ -87,7 +96,8 @@ public class PlayMusicFragment extends Fragment
         mImageButtonPause = view.findViewById(R.id.imageButtonPause);
         mSeekBar = view.findViewById(R.id.seekBarSong);
         view.findViewById(R.id.imageButtonNext).setOnClickListener(this);
-        view.findViewById(R.id.imageButtonShuffle).setOnClickListener(this);
+        mImageButtonShuffle = view.findViewById(R.id.imageButtonShuffle);
+        mImageButtonShuffle.setOnClickListener(this);
         mTextViewNameSong = view.findViewById(R.id.textViewName);
         mTextViewTimeSongPosition = view.findViewById(R.id.textViewTimeSongPosition);
         mTextViewTimeSongDuration = view.findViewById(R.id.textViewTimeSongDuration);
@@ -100,10 +110,9 @@ public class PlayMusicFragment extends Fragment
     }
 
     private void initData() {
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            mSongs = bundle.getParcelableArrayList(ARGUMENT_SONGS);
-            mPosition = bundle.getInt(ARGUMENT_POSITION);
+        if (getArguments() != null) {
+            mSongs = getArguments().getParcelableArrayList(ARGUMENT_SONGS);
+            mPosition = getArguments().getInt(ARGUMENT_POSITION);
             setTextImage();
         }
         mMediaPlayer = mServicePlayMusic.getMediaPlayer();
@@ -138,24 +147,28 @@ public class PlayMusicFragment extends Fragment
                 setButtonPlayPause();
                 break;
             case R.id.imageButtonShuffle:
+                setButtonShuffle();
                 break;
             default:
                 break;
         }
     }
 
-    private void setSeekBar(){
-        if (mMediaPlayer.isPlaying()){
+    private void setSeekBar() {
+        if (mMediaPlayer.isPlaying()) {
             final Handler handler = new Handler();
-            getActivity().runOnUiThread(new Runnable() {
+            Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     mSeekBar.setMax(mMediaPlayer.getDuration() / Constant.ONE_THOUSAND);
-                    int mCurrentPosition = mMediaPlayer.getCurrentPosition()/Constant.ONE_THOUSAND;
+                    int mCurrentPosition =
+                            mMediaPlayer.getCurrentPosition() / Constant.ONE_THOUSAND;
                     mSeekBar.setProgress(mCurrentPosition);
-                    mTextViewTimeSongPosition.setText(parseDurationToStringTime(mMediaPlayer.getCurrentPosition()));
-                    mTextViewTimeSongDuration.setText(parseDurationToStringTime(mMediaPlayer.getDuration()));
-                    handler.postDelayed(this,Constant.ONE_THOUSAND);
+                    mTextViewTimeSongPosition.setText(
+                            parseDurationToStringTime(mMediaPlayer.getCurrentPosition()));
+                    mTextViewTimeSongDuration.setText(
+                            parseDurationToStringTime(mMediaPlayer.getDuration()));
+                    handler.postDelayed(this, Constant.ONE_THOUSAND);
                 }
             });
         }
@@ -182,9 +195,13 @@ public class PlayMusicFragment extends Fragment
     public void onCompletion(MediaPlayer mp) {
         switch (mState) {
             case NON_LOOP:
-                mMediaPlayer.stop();
-                mImageButtonPlay.setVisibility(View.VISIBLE);
+                mPosition = mServicePlayMusic.nextPlayer();
+                setTextImage();
+                if (mPosition == 0) {
+                    mMediaPlayer.stop();
+                }
                 mImageButtonPause.setVisibility(View.GONE);
+                mImageButtonPlay.setVisibility(View.VISIBLE);
                 break;
             case LOOP_ONE:
                 mPosition = mServicePlayMusic.loopOne();
@@ -193,6 +210,31 @@ public class PlayMusicFragment extends Fragment
                 mPosition = mServicePlayMusic.nextPlayer();
                 setTextImage();
                 break;
+        }
+        switch (mStateShuffle) {
+            case SHUFFLE:
+                handleShuffle();
+                break;
+        }
+    }
+
+    private void handleShuffle() {
+        mPosition = new Random().nextInt((mSongs.size() - Constant.ONE) + Constant.ONE);
+        mServicePlayMusic.autoPlay(mPosition, mSongs);
+        setTextImage();
+        mImageButtonPause.setVisibility(View.VISIBLE);
+        mImageButtonPlay.setVisibility(View.GONE);
+    }
+
+    private void setButtonShuffle() {
+        if (mStateShuffle == NON_SHUFFLE) {
+            mStateShuffle = SHUFFLE;
+            mImageButtonShuffle.setImageResource(R.drawable.ic_shuffle_black_24dp);
+            Toast.makeText(getContext(), getString(R.string.shuffle), Toast.LENGTH_SHORT).show();
+        } else {
+            mStateShuffle = NON_SHUFFLE;
+            mImageButtonShuffle.setImageResource(R.drawable.ic_shuffle_white_24dp);
+            Toast.makeText(getContext(), getString(R.string.no_shuffle), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -223,14 +265,14 @@ public class PlayMusicFragment extends Fragment
 
     private void setTextImage() {
         mTextViewNameSong.setText(mSongs.get(mPosition).getNameSong());
-        Glide.with(getActivity().getApplicationContext())
+        Glide.with(Objects.requireNonNull(getActivity()).getApplicationContext())
                 .load(mSongs.get(mPosition).getImage())
                 .into(mImageViewSongs);
     }
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        if (mMediaPlayer != null && fromUser){
+        if (mMediaPlayer != null && fromUser) {
             mMediaPlayer.seekTo(progress * Constant.ONE_THOUSAND);
         }
     }

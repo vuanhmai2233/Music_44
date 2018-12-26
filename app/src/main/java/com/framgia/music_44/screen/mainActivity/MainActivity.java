@@ -25,7 +25,6 @@ import com.framgia.music_44.screen.genres.GenresFragment;
 import com.framgia.music_44.screen.home.HomeFragment;
 import com.framgia.music_44.screen.play_music.service.ServicePlayMusic;
 import com.framgia.music_44.util.Constant;
-import com.framgia.music_44.util.Genres;
 
 public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener,
         BottomNavigationView.OnNavigationItemSelectedListener {
@@ -71,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     private void setupViewPager() {
         ViewpagerAdapter viewpagerAdapter = new ViewpagerAdapter(getSupportFragmentManager());
-        viewpagerAdapter.addFragment(HomeFragment.newInstance());
+        viewpagerAdapter.addFragment(HomeFragment.newInstance(Constant.LOCAL));
         viewpagerAdapter.addFragment(GenresFragment.newInstance());
         mViewPager.setAdapter(viewpagerAdapter);
     }
@@ -145,11 +144,12 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+           @NonNull int[] grantResults) {
         switch (requestCode) {
             case Constant.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
                 } else {
                     Toast.makeText(MainActivity.this, R.string.get_accounts_denied,
                             Toast.LENGTH_SHORT).show();
