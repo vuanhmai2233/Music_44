@@ -11,6 +11,6 @@ public interface HomeContract {
     interface Presenter {
         void getSongsLocal();
 
-        void getSongRemote();
+        void getSongRemote(String url);
     }
 }

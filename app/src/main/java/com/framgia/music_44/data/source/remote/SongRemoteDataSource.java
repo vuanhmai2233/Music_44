@@ -16,7 +16,7 @@ public class SongRemoteDataSource implements SongDataSource.Remote {
     }
 
     @Override
-    public void getSongsRemote(OnResultDataListenerRemote songRemote) {
-        new GetMusicDataJson(songRemote).execute(Constant.BASE_URL);
+    public void getSongsRemote(OnResultDataListenerRemote songRemote, String genres) {
+        new GetMusicDataJson(songRemote).execute(Constant.BASE_URL + genres);
     }
 }

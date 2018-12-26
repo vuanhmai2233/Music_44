@@ -27,7 +27,7 @@ public class SongsRepository {
         mLocalDataSource.getSongsLocal(songLocal);
     }
 
-    public void getDataRemote(OnResultDataListenerRemote remote) {
-        mRemoteDataSource.getSongsRemote(remote);
+    public void getDataRemote(OnResultDataListenerRemote remote, String genres) {
+        mRemoteDataSource.getSongsRemote(remote, genres);
     }
 }

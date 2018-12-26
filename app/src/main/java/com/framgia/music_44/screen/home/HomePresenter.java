@@ -26,12 +26,12 @@ public class HomePresenter implements HomeContract.Presenter {
     }
 
     @Override
-    public void getSongRemote() {
+    public void getSongRemote(String genres) {
         mSongsRepository.getDataRemote(new OnResultDataListenerRemote() {
             @Override
             public void onSuccess(List<Songs> data) {
                 mView.onGetSongsSuccess(data);
             }
-        });
+        }, genres);
     }
 }
