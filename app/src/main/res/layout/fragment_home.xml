@@ -6,9 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/dp_5"
+    android:background="@drawable/background_main"
     >
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recylerViewHome"
+        android:id="@+id/recyclerViewHome"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"

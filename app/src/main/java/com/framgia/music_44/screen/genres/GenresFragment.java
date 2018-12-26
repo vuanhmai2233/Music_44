@@ -11,7 +11,9 @@ import android.view.ViewGroup;
 import com.framgia.music_44.R;
 import com.framgia.music_44.data.model.Genre;
 import com.framgia.music_44.screen.genres.adapter.GenresAdapter;
+import com.framgia.music_44.screen.home.HomeFragment;
 import com.framgia.music_44.util.Genres;
+import com.framgia.music_44.util.GenresId;
 import com.framgia.music_44.util.Navigator;
 import com.framgia.music_44.util.OnItemClickListener;
 import java.util.ArrayList;
@@ -41,7 +43,7 @@ public class GenresFragment extends Fragment implements OnItemClickListener {
         List<Genre> genreList = new ArrayList<>();
         genreList.add(new Genre(Genres.ALL_MUSIC));
         genreList.add(new Genre(Genres.ALL_AUDIO));
-        genreList.add(new Genre(Genres.ALTERNATIVEROCK));
+        genreList.add(new Genre(Genres.ALTERNATIVE_ROCK));
         genreList.add(new Genre(Genres.AMBIENT));
         genreList.add(new Genre(Genres.CLASSICAL));
         genreList.add(new Genre(Genres.COUNTRY));
@@ -50,6 +52,31 @@ public class GenresFragment extends Fragment implements OnItemClickListener {
 
     @Override
     public void onItemClick(int position) {
-
+        switch (position) {
+            case GenresId.ALL_MUSIC_INT:
+                mNavigator.addFragment(HomeFragment.newInstance(Genres.ALL_MUSIC),
+                        getFragmentManager());
+                break;
+            case GenresId.ALL_AUDIO_INT:
+                mNavigator.addFragment(HomeFragment.newInstance(Genres.ALL_AUDIO),
+                        getFragmentManager());
+                break;
+            case GenresId.ALTERNATIVE_ROCK_INT:
+                mNavigator.addFragment(HomeFragment.newInstance(Genres.ALTERNATIVE_ROCK),
+                        getFragmentManager());
+                break;
+            case GenresId.AMBIENT_INT:
+                mNavigator.addFragment(HomeFragment.newInstance(Genres.AMBIENT),
+                        getFragmentManager());
+                break;
+            case GenresId.CLASSICAL_INT:
+                mNavigator.addFragment(HomeFragment.newInstance(Genres.CLASSICAL),
+                        getFragmentManager());
+                break;
+            case GenresId.COUNTRY_INT:
+                mNavigator.addFragment(HomeFragment.newInstance(Genres.COUNTRY),
+                        getFragmentManager());
+                break;
+        }
     }
 }

@@ -87,6 +87,7 @@ public class PlayMusicFragment extends Fragment
         mImageButtonPause = view.findViewById(R.id.imageButtonPause);
         mSeekBar = view.findViewById(R.id.seekBarSong);
         view.findViewById(R.id.imageButtonNext).setOnClickListener(this);
+        view.findViewById(R.id.imageButtonShuffle).setOnClickListener(this);
         mTextViewNameSong = view.findViewById(R.id.textViewName);
         mTextViewTimeSongPosition = view.findViewById(R.id.textViewTimeSongPosition);
         mTextViewTimeSongDuration = view.findViewById(R.id.textViewTimeSongDuration);
@@ -135,6 +136,8 @@ public class PlayMusicFragment extends Fragment
             case R.id.imageButtonNext:
                 setButtonNext();
                 setButtonPlayPause();
+                break;
+            case R.id.imageButtonShuffle:
                 break;
             default:
                 break;
