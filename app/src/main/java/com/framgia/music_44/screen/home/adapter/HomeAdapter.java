@@ -15,8 +15,6 @@ import com.framgia.music_44.util.OnItemClickListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.framgia.music_44.util.Constant.ONE;
-
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ItemViewHolder> {
     private List<Songs> mSongs;
     private Context mContext;
@@ -30,7 +28,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ItemViewHolder
 
     public void addSongs(List<Songs> songs) {
         mSongs.addAll(songs);
-        notifyItemRangeChanged(mSongs.size() - ONE, songs.size() - ONE);
+        notifyItemRangeInserted(mSongs.size() - songs.size(), songs.size());
     }
 
     @NonNull

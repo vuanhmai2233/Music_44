@@ -21,9 +21,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Toast;
 import com.framgia.music_44.R;
+import com.framgia.music_44.screen.genres.GenresFragment;
 import com.framgia.music_44.screen.home.HomeFragment;
 import com.framgia.music_44.screen.play_music.service.ServicePlayMusic;
 import com.framgia.music_44.util.Constant;
+import com.framgia.music_44.util.Genres;
 
 public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener,
         BottomNavigationView.OnNavigationItemSelectedListener {
@@ -70,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     private void setupViewPager() {
         ViewpagerAdapter viewpagerAdapter = new ViewpagerAdapter(getSupportFragmentManager());
         viewpagerAdapter.addFragment(HomeFragment.newInstance());
+        viewpagerAdapter.addFragment(GenresFragment.newInstance());
         mViewPager.setAdapter(viewpagerAdapter);
     }
 
