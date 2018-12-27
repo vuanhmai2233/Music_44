@@ -15,6 +15,8 @@ import com.framgia.music_44.util.Constant;
 import java.io.IOException;
 import java.util.List;
 
+import static com.framgia.music_44.util.Constant.ONE;
+
 public class ServicePlayMusic extends Service {
     private static final String STATUS_DOWNLOAD = "DownLoading";
     private MediaPlayer mMediaPlayer;
@@ -73,7 +75,7 @@ public class ServicePlayMusic extends Service {
     public int backPlayer() {
         mPosition--;
         if (mPosition < Constant.ZERO) {
-            mPosition = mSongs.size() - Constant.ONE;
+            mPosition = mSongs.size() - ONE;
         }
         autoPlay(mPosition, mSongs);
         return mPosition;
@@ -81,7 +83,7 @@ public class ServicePlayMusic extends Service {
 
     public int nextPlayer() {
         mPosition++;
-        if (mPosition > mSongs.size() - Constant.ONE) {
+        if (mPosition > mSongs.size() - ONE) {
             mPosition = Constant.ZERO;
         }
         autoPlay(mPosition, mSongs);

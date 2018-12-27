@@ -17,21 +17,33 @@ import com.framgia.music_44.screen.play_music.PlayMusicFragment;
 import com.framgia.music_44.util.Navigator;
 import com.framgia.music_44.util.OnItemClickListener;
 import java.util.List;
+import java.util.Objects;
+
+import static com.framgia.music_44.util.Constant.LOCAL;
+import static com.framgia.music_44.util.Constant.REMOTE;
 
 public class HomeFragment extends Fragment implements HomeContract.View, OnItemClickListener {
+
     public static final String ARGUMENT_GENRES = "ARGUMENT_GENRES";
+    public static final String ARGUMENT_KEY = "ARGUMENT_KEY";
+
     private HomeContract.Presenter mPresenter;
     private HomeAdapter mHomeAdapter;
     private List<Songs> mSongs;
     private Navigator mNavigator;
 
-    public static HomeFragment newInstance() {
-        return new HomeFragment();
-    }
-
-    public static HomeFragment newInstance(String genres) {
+    public static HomeFragment newInstance(String key) {
         HomeFragment homeFragment = new HomeFragment();
         Bundle bundle = new Bundle();
+        bundle.putString(ARGUMENT_KEY, key);
+        homeFragment.setArguments(bundle);
+        return homeFragment;
+    }
+
+    public static HomeFragment newInstance(String key, String genres) {
+        HomeFragment homeFragment = new HomeFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(ARGUMENT_KEY, key);
         bundle.putString(ARGUMENT_GENRES, genres);
         homeFragment.setArguments(bundle);
         return homeFragment;
@@ -58,8 +70,15 @@ public class HomeFragment extends Fragment implements HomeContract.View, OnItemC
     public void initData() {
         Bundle bundle = getArguments();
         if (bundle != null) {
-            String genre = bundle.getString(ARGUMENT_GENRES);
-            mPresenter.getSongRemote(genre);
+            switch (Objects.requireNonNull(bundle.getString(ARGUMENT_KEY))) {
+                case LOCAL:
+                    mPresenter.getSongsLocal();
+                    break;
+                case REMOTE:
+                    String genre = bundle.getString(ARGUMENT_GENRES);
+                    mPresenter.getSongRemote(genre);
+                    break;
+            }
         }
     }
 

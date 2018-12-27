@@ -10,4 +10,6 @@
     <string name="permission_necessary">Permission necessary</string>
     <string name="permission_is_necessary">Permission is necessary</string>
     <string name="get_accounts_denied">Get accounts denied</string>
+    <string name="shuffle">shuffle</string>
+    <string name="no_shuffle">no shuffle</string>
 </resources>
