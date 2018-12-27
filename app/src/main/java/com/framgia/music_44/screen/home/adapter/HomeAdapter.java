@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.framgia.music_44.R;
 import com.framgia.music_44.data.model.Songs;
 import com.framgia.music_44.util.OnItemClickListener;
@@ -65,9 +66,17 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ItemViewHolder
         }
 
         private void bindData(Songs songs, Context context) {
-            Glide.with(context).load(songs.getImage()).into(mImageViewSong);
+            Glide.with(context)
+                    .applyDefaultRequestOptions(
+                            new RequestOptions().placeholder(R.drawable.image_view))
+                    .load(songs.getImage())
+                    .into(mImageViewSong);
+            if (songs.getNameArtist().equals("null")) {
+                mTextViewNameArtist.setText(context.getString(R.string.not_artist));
+            } else {
+                mTextViewNameArtist.setText(songs.getNameArtist());
+            }
             mTextViewNameSong.setText(songs.getNameSong());
-            mTextViewNameArtist.setText(songs.getNameArtist());
         }
 
         @Override

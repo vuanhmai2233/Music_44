@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 import com.framgia.music_44.R;
 import com.framgia.music_44.data.model.Songs;
 import com.framgia.music_44.data.source.SongsRepository;
@@ -21,6 +22,7 @@ import java.util.Objects;
 
 import static com.framgia.music_44.util.Constant.LOCAL;
 import static com.framgia.music_44.util.Constant.REMOTE;
+import static com.framgia.music_44.util.Constant.SEARCH_KEY;
 
 public class HomeFragment extends Fragment implements HomeContract.View, OnItemClickListener {
 
@@ -40,11 +42,11 @@ public class HomeFragment extends Fragment implements HomeContract.View, OnItemC
         return homeFragment;
     }
 
-    public static HomeFragment newInstance(String key, String genres) {
+    public static HomeFragment newInstance(String key, String query) {
         HomeFragment homeFragment = new HomeFragment();
         Bundle bundle = new Bundle();
         bundle.putString(ARGUMENT_KEY, key);
-        bundle.putString(ARGUMENT_GENRES, genres);
+        bundle.putString(ARGUMENT_GENRES, query);
         homeFragment.setArguments(bundle);
         return homeFragment;
     }
@@ -75,8 +77,10 @@ public class HomeFragment extends Fragment implements HomeContract.View, OnItemC
                     mPresenter.getSongsLocal();
                     break;
                 case REMOTE:
-                    String genre = bundle.getString(ARGUMENT_GENRES);
-                    mPresenter.getSongRemote(genre);
+                    mPresenter.getSongRemote(bundle.getString(ARGUMENT_GENRES));
+                    break;
+                case SEARCH_KEY:
+                    mPresenter.getSongBySearch(bundle.getString(ARGUMENT_GENRES));
                     break;
             }
         }
@@ -96,6 +100,11 @@ public class HomeFragment extends Fragment implements HomeContract.View, OnItemC
             mSongs = songs;
             mHomeAdapter.addSongs(songs);
         }
+    }
+
+    @Override
+    public void onGetSongsFail(Exception e) {
+        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
     }
 
     @Override

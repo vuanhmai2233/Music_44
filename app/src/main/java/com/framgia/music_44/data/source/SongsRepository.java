@@ -30,4 +30,8 @@ public class SongsRepository {
     public void getDataRemote(OnResultDataListenerRemote remote, String genres) {
         mRemoteDataSource.getSongsRemote(remote, genres);
     }
+
+    public void getDataBySearch(OnResultDataListenerRemote remote, String search) {
+        mRemoteDataSource.getSongsBySearch(remote, search);
+    }
 }

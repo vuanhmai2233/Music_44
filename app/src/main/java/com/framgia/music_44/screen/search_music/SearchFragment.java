@@ -14,11 +14,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import com.framgia.music_44.R;
+import com.framgia.music_44.screen.home.HomeFragment;
+import com.framgia.music_44.util.Constant;
+import com.framgia.music_44.util.Navigator;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 public class SearchFragment extends Fragment {
 
     private MaterialSearchView mMaterialSearchView;
+    private Navigator mNavigator;
 
     public static SearchFragment newInstance() {
         return new SearchFragment();
@@ -31,6 +35,7 @@ public class SearchFragment extends Fragment {
         View view = inflater.inflate(R.layout.search_fragment, container, false);
         initView(view);
         setHasOptionsMenu(true);
+        handleSearch();
         return view;
     }
 
@@ -38,8 +43,25 @@ public class SearchFragment extends Fragment {
         Toolbar toolbar = view.findViewById(R.id.toolBar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.search);
-        toolbar.setTitleTextColor(Color.parseColor(getString(R.string.dark)));
+        toolbar.setTitleTextColor(Color.WHITE);
         mMaterialSearchView = view.findViewById(R.id.searchView);
+        mNavigator = new Navigator();
+    }
+
+    private void handleSearch() {
+        mMaterialSearchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                mNavigator.addFragment(HomeFragment.newInstance(Constant.SEARCH_KEY, query),
+                        getFragmentManager());
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
     }
 
     @Override

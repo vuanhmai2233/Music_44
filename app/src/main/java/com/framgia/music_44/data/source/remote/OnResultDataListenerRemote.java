@@ -5,4 +5,6 @@ import java.util.List;
 
 public interface OnResultDataListenerRemote {
     void onSuccess(List<Songs> data);
+
+    void onFail(Exception e);
 }

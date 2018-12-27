@@ -1,9 +1,9 @@
 package com.framgia.music_44.data.source.remote.fetchjson;
 
 import android.os.AsyncTask;
+import com.framgia.music_44.BuildConfig;
 import com.framgia.music_44.data.model.Songs;
 import com.framgia.music_44.data.source.remote.OnResultDataListenerRemote;
-import com.framgia.music_44.util.Constant;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,6 +20,9 @@ import org.json.JSONObject;
 public class GetMusicDataJson extends AsyncTask<String, String, List<Songs>> {
 
     private static final String COLLECTION = "collection";
+    private static final String BASE_URL = "https://api.soundcloud.com";
+    private static final String CLIENT_ID = "&client_id=" + BuildConfig.API_KEY;
+
     private OnResultDataListenerRemote mOnResultDataListenerRemote;
 
     public GetMusicDataJson(OnResultDataListenerRemote onResultDataListenerRemote) {
@@ -39,10 +42,10 @@ public class GetMusicDataJson extends AsyncTask<String, String, List<Songs>> {
         mOnResultDataListenerRemote.onSuccess(data);
     }
 
-    private String getJsonFromUrl(String strings) {
+    private String getJsonFromUrl(String urlString) {
         String data = "";
         try {
-            URL url = new URL(strings);
+            URL url = new URL(BASE_URL + urlString + CLIENT_ID);
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             InputStream inputStream = httpURLConnection.getInputStream();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -54,6 +57,7 @@ public class GetMusicDataJson extends AsyncTask<String, String, List<Songs>> {
             httpURLConnection.disconnect();
         } catch (MalformedURLException e) {
             e.printStackTrace();
+            mOnResultDataListenerRemote.onFail(e);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -73,7 +77,7 @@ public class GetMusicDataJson extends AsyncTask<String, String, List<Songs>> {
                         .image(object.getString(Songs.SongsEntry.ARTWORK_URL))
                         .nameArtist(object.getString(Songs.SongsEntry.LABLE_NAME))
                         .nameSong(object.getString(Songs.SongsEntry.TITLE))
-                        .uri(object.getString(Songs.SongsEntry.STREAM_URL) + Constant.CLIENT_ID)
+                        .uri(object.getString(Songs.SongsEntry.STREAM_URL) + CLIENT_ID)
                         .build();
                 songsList.add(songs);
             }

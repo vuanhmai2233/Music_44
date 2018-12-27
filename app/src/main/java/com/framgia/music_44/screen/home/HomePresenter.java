@@ -32,6 +32,26 @@ public class HomePresenter implements HomeContract.Presenter {
             public void onSuccess(List<Songs> data) {
                 mView.onGetSongsSuccess(data);
             }
+
+            @Override
+            public void onFail(Exception e) {
+                mView.onGetSongsFail(e);
+            }
         }, genres);
+    }
+
+    @Override
+    public void getSongBySearch(String querySearch) {
+        mSongsRepository.getDataBySearch(new OnResultDataListenerRemote() {
+            @Override
+            public void onSuccess(List<Songs> data) {
+                mView.onGetSongsSuccess(data);
+            }
+
+            @Override
+            public void onFail(Exception e) {
+                mView.onGetSongsFail(e);
+            }
+        }, querySearch);
     }
 }
