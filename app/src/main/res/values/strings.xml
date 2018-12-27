@@ -12,4 +12,6 @@
     <string name="get_accounts_denied">Get accounts denied</string>
     <string name="shuffle">shuffle</string>
     <string name="no_shuffle">no shuffle</string>
+    <string name="search">Search</string>
+    <string name="Search_menu">Search ...</string>
 </resources>

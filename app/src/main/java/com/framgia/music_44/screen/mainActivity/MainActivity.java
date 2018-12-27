@@ -24,6 +24,7 @@ import com.framgia.music_44.R;
 import com.framgia.music_44.screen.genres.GenresFragment;
 import com.framgia.music_44.screen.home.HomeFragment;
 import com.framgia.music_44.screen.play_music.service.ServicePlayMusic;
+import com.framgia.music_44.screen.search_music.SearchFragment;
 import com.framgia.music_44.util.Constant;
 
 public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener,
@@ -72,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         ViewpagerAdapter viewpagerAdapter = new ViewpagerAdapter(getSupportFragmentManager());
         viewpagerAdapter.addFragment(HomeFragment.newInstance(Constant.LOCAL));
         viewpagerAdapter.addFragment(GenresFragment.newInstance());
+        viewpagerAdapter.addFragment(SearchFragment.newInstance());
         mViewPager.setAdapter(viewpagerAdapter);
     }
 

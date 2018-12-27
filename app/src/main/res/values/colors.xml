@@ -13,4 +13,5 @@
     <color name="color_dark2">#25232b</color>
     <color name="color_purple">#af6eef</color>
     <color name="color_pink">#ebc5f7</color>
+    <string name="dark">#FFFFF</string>
 </resources>
